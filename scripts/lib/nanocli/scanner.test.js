@@ -1,5 +1,7 @@
-import {Scanner, Token, TokenType} from './nanocli.js';
 import * as assert from 'node:assert/strict';
+import util from "node:util";
+
+import {Scanner, Token, TokenType} from './scanner.js';
 
 /**
  * Tests use a combination of expect and assert
@@ -11,6 +13,53 @@ import * as assert from 'node:assert/strict';
  *   will be used (which is also useful as a form of documentation), but failure
  *   output isn't as helpful since all that gets reported is a boolean failure
  */
+
+
+describe.skip("whitespace pattern", () => {
+  const whitespacePattern = /\s/g;
+
+  const tests = [
+    { input: " ", lastIndex: 0, expect: true },
+    { input: " foo", lastIndex: 1, expect: false },
+    // { input: "foo ", lastIndex: 0, expect: false },
+    // { input: "foo ", lastIndex: 2, expect: false },
+    // { input: "foo ", lastIndex: 3, expect: true },
+    // { input: "foo bar", lastIndex: 3, expect: true },
+    // { input: "foo bar", lastIndex: 4, expect: false },
+    // { input: "foo bar", lastIndex: 6, expect: false },
+    // { input: "foo bar", lastIndex: 7, expect: true },
+    // { input: "foo bar", lastIndex: 8, expect: true },
+  ];
+
+  test("identifiers", () => {
+    tests.forEach((t, index) => {
+      whitespacePattern.lastIndex = t.lastIndex;
+
+      console.log(`${index}: ${whitespacePattern.test(t.input)}`);
+
+      whitespacePattern.lastIndex = t.lastIndex;
+      assert.equal(whitespacePattern.test(t.input), t.expect, `${index}: ${util.inspect(t)}`);
+    });
+  });
+
+});
+
+describe("string pattern", () => {
+  const stringPattern = /\w+/;
+
+  const tests = [
+      "foo",
+      "foo = bar"
+  ]
+
+  test("identifiers", () => {
+    tests.forEach((input, index) => {
+      assert.ok(stringPattern.test(input));
+    });
+  });
+
+});
+
 
 describe('TokenType', () => {
 
@@ -42,7 +91,7 @@ describe("Token", () => {
     assert.ok(token.value === ",");
   });
 
-  test("value() defaults to text", () => {
+  test("value defaults to text", () => {
     let token = new Token({text: "foo", "type": TokenType.string});
     expect(token.value).toBe("foo");
   });
@@ -194,6 +243,27 @@ describe("Scanner", () => {
       expect(list[1]).toBe(2.1);
     });
 
+  });
+
+  describe("Assignment with quoted string", () => {
+
+    test("basic assignment", () => {
+      const input = 'foo="bar"';
+      const scanner = new Scanner();
+      const tokens = scanner.scan(input).tokens;
+      expect(tokens.length).toBe(3);
+      expect(tokens[2].value).toBe("bar");
+      expect(tokens[2].type).toBe(TokenType.quotedString);
+    });
+
+    test("multiple assignments", () => {
+      const input = "foo=bar baz=\"boo\"";
+      const scanner = new Scanner();
+      const tokens = scanner.scan(input).tokens;
+      expect(tokens.length).toBe(6);
+      expect(tokens[5].value).toBe("boo");
+      expect(tokens[5].type).toBe(TokenType.quotedString);
+    });
   });
 
 });

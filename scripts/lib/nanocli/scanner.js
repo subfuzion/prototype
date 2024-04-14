@@ -1,14 +1,10 @@
-// import process from "node:process";
 import util from "node:util";
 
-/**
- * An enum class for TokenType. Add new token types as static fields.
- * @enum { TokenType }
- */
 export class TokenType {
   static end = new TokenType("end");
   static ws = new TokenType("ws");
   static string = new TokenType("string");
+  static quotedString = new TokenType("quotedString");
   static number = new TokenType("number");
   static boolean = new TokenType("boolean");
   static array = new TokenType("array");
@@ -27,12 +23,12 @@ export class TokenType {
     this.#type = Symbol(name);
   }
 
-  /** @return { string } */
+  /** @return {string} */
   get name() {
     return this.#name;
   }
 
-  /** @return { Symbol } */
+  /** @return {Symbol} */
   get type() {
     return this.#type;
   }
@@ -48,11 +44,10 @@ export class TokenType {
   /**
    * Custom util.inspect required for console.log to work
    */
-  [util.inspect.custom](depth, options, inspect) {
+  [util.inspect.custom](_depth, options, _inspect) {
     return options.stylize(`[TokenType] ${this.name}`, "string");
   }
 }
-
 
 export class Token {
   /**
@@ -68,13 +63,6 @@ export class Token {
    * @type {number}
    */
   endCol;
-
-  /**
-   * The length of the token's text in the buffer
-   * Example: the length for "foo" in "..foo.." is (endCol - startCol) === 3
-   * @type {number}
-   */
-  #len;
 
   /**
    * The scanned raw text
@@ -109,17 +97,19 @@ export class Token {
     }, {});
 
     Object.assign(this, map);
-    if (!this.value) this.value = this.text;
+    if (!this.value) {
+      this.value = this.text;
+    }
   }
 
   /**
-   * Get the processed value from text
-   * @return { number }
+   * The length of the token's text in the buffer
+   * Example: the length for "foo" in "..foo.." is (endCol - startCol) === 3
+   * @return {number}
    */
   get length() {
     return this.endCol - this.startCol;
   }
-
 
   /**
    * @override
@@ -127,9 +117,9 @@ export class Token {
    */
   toString() {
     const keys = [
-      "text",
       "type",
       "value",
+      "text",
       "startCol",
       "endCol",
       "length",
@@ -146,10 +136,8 @@ export class Token {
   /**
    * Custom util.inspect required for console.log to work
    */
-  [util.inspect.custom](depth, options, inspect) {
-    return options.stylize(
-        `[Token] ${this.toString()}`,
-        "string");
+  [util.inspect.custom](_depth, options, _inspect) {
+    return options.stylize(`[Token] ${this.toString()}`, "string");
   }
 }
 
@@ -157,13 +145,30 @@ export class Token {
  * HACK: scans a string, scan should return an iterator
  */
 export class Scanner {
-  static whitespacePattern = [" ", "\t", "\n", "\r"];
-  static quotesPattern = ["'", '"', "`"];
-  static assignmentPattern = "=";
-  static separatorPattern = ",";
+  static whitespacePattern = [
+    " ",
+    "\t",
+    "\n",
+    "\r"
+  ];
+  static whitespaceRegex = /\s+/;
 
-  /** @type {object} */
-  #options;
+  static quotesPattern = [
+    "'",
+    '"',
+    "`"
+  ];
+  static quotesRegex = [
+    "'",
+    '"',
+    "`"
+  ];
+
+  static assignmentPattern = "=";
+  static assignmentRegex = "=";
+
+  static separatorPattern = ",";
+  static separatorRegex = ",";
 
   /** @type {string} */
   #buffer;
@@ -173,13 +178,6 @@ export class Scanner {
 
   /** @type { Token[]} */
   #tokens = [];
-
-  /**
-   * @param {object?} options
-   */
-  constructor(options) {
-    this.#options = options;
-  }
 
   /** @return {string} */
   get buffer() {
@@ -199,40 +197,66 @@ export class Scanner {
     this.#buffer = buffer;
     this.#col = 0;
 
-    const buf = [];
-
     while (this.#col < this.#buffer.length) {
+      let token;
+
       if (this.matchWhitespace()) {
         this.skipWhitespace();
-      } else if (this.matchAssignment()) {
-        // return assignment token
-        const token = this.readAssignment();
-        this.#tokens.push(token);
-        this.#col = token.endCol;
+        continue;
       }
-      // if (this.matchQuote(i)) {
-        // read until matching end quote and return quote token
-      // } else if (this.matchAssignment(i)) {
-        // return assignment token
-      // } else if (this.matchSeparator(i)) {
-        // read until whitespace, split on separator, return array token
-      // } else {
-      //   const token = this.readString();
-      //   this.#tokens.push(token);
-      //   this.#col = token.endCol;
-      // }
+      else if (this.matchAssignment()) {
+        token = this.readAssignment();
+      }
+      else if (this.matchQuote()) {
+        token = this.readQuotedString();
+      }
       else {
-        const token = this.readString();
-        this.#tokens.push(token);
-        this.#col = token.endCol;
+        token = this.readString();
       }
+
+      this.#tokens.push(token);
+      this.#col = token.endCol;
     }
 
     return this;
   }
 
+  readQuotedString() {
+    let startCol = this.#col;
+    let i = startCol;
+    let max = this.#buffer.length;
+
+    const matchers = [
+      // Scanner.whitespacePattern,
+      // Scanner.quotesPattern,
+      // Scanner.assignmentPattern,
+    ];
+
+    matching:
+        for (; i < max; i++) {
+          let ch = this.peek(i);
+
+          for (let dontMatch = 0; dontMatch < matchers.length; dontMatch++) {
+            if (matchers[dontMatch].includes(ch)) {
+              break matching;
+            }
+          }
+        }
+
+    const text = this.#buffer.slice(startCol, i);
+
+    let token = new Token({
+      text: text,
+      type: TokenType.quotedString,
+      value: text.slice(1, -1), // strip quotes
+      startCol: startCol,
+      endCol: i,
+    });
+
+    return token;
+  }
+
   readString() {
-    const buf = [];
     const startCol = this.#col;
     let i = startCol;
     let max = this.#buffer.length;
@@ -244,17 +268,15 @@ export class Scanner {
     ];
 
     matching:
-    for (i = startCol; i < max; i++) {
-      let ch = this.peek(i);
+        for (; i < max; i++) {
+          let ch = this.peek(i);
 
-      for (let dontMatch= 0; dontMatch < matchers.length; dontMatch++) {
-        if (matchers[dontMatch].includes(ch)) {
-          break matching;
+          for (let dontMatch = 0; dontMatch < matchers.length; dontMatch++) {
+            if (matchers[dontMatch].includes(ch)) {
+              break matching;
+            }
+          }
         }
-
-        buf.push(ch);
-      }
-    }
 
     const text = this.#buffer.slice(startCol, i);
 
@@ -274,7 +296,6 @@ export class Scanner {
         endCol: i,
       });
     }
-
 
     let token = new Token({
       text: text,
@@ -297,10 +318,15 @@ export class Scanner {
     const prev = this.peek(startCol - 1);
     const next = this.peek(startCol + 1);
 
-    [prev, next].forEach((ch) =>{
+    [
+      prev,
+      next
+    ].forEach((ch) => {
       if (Scanner.whitespacePattern.includes(ch)) {
         // startCol+1 since users usually expect 1-based positions in the shell
-        throw new Error(`Can't have any space before or after '=' in position ${startCol+1} of the input`);
+        throw new Error(
+            `Can't have any space before or after '=' in position ${startCol
+            + 1} of the input`);
       }
     });
 
@@ -323,8 +349,8 @@ export class Scanner {
     return this.match(this.#col, Scanner.whitespacePattern);
   }
 
-  matchQuote(index) {
-    return this.match(index, Scanner.quotesPattern);
+  matchQuote() {
+    return this.match(this.#col, Scanner.quotesPattern);
   }
 
   matchAssignment() {
@@ -335,8 +361,7 @@ export class Scanner {
     return this.match(index, Scanner.separatorPattern);
   }
 
-  readToNextQuote(index) {
-
+  readToNextQuote(_index) {
   }
 
   skip() {
@@ -348,7 +373,6 @@ export class Scanner {
       this.skip();
     }
   }
-
 
   read() {
     return this.#buffer[this.#col++];
