@@ -323,6 +323,11 @@ describe("Samples", () => {
       ],
     },
     {
+      // simulate
+      // - crazy command
+      // - with foo:bar subcommand and options
+      // - with cool subcommand and options
+      // - with done argument
       input: 'crazy foo:bar -h --rm -it cool --baz=boo --bob:bee done',
       tokens: [
         {value: "crazy", type: TokenType.string},
