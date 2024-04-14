@@ -223,7 +223,6 @@ describe("Scanner", () => {
 describe("Samples", () => {
   const tests = [
     {
-      skip: true,
       input: "foo bar baz",
       tokens: [
         {value: "foo", type: TokenType.string},
@@ -232,7 +231,6 @@ describe("Samples", () => {
       ],
     },
     {
-      skip: true,
       input: "foo=bar baz=boo",
       tokens: [
         {value: "foo", type: TokenType.string},
@@ -244,7 +242,6 @@ describe("Samples", () => {
       ],
     },
     {
-      skip: true,
       input: 'foo="bar" baz=boo',
       tokens: [
         {value: "foo", type: TokenType.string},
@@ -256,7 +253,6 @@ describe("Samples", () => {
       ],
     },
     {
-      skip: true,
       input: 'foo="bar" baz="boo"',
       tokens: [
         {value: "foo", type: TokenType.string},
@@ -293,6 +289,14 @@ describe("Samples", () => {
         {value: "bob", type: TokenType.string},
         {value: "=", type: TokenType.assignment},
         {value: "bee", type: TokenType.quotedString},
+      ],
+    },
+    {
+      input: "foo bar baz",
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "bar", type: TokenType.string},
+        {value: "baz", type: TokenType.string},
       ],
     },
   ];

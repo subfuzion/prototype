@@ -232,6 +232,7 @@ export class Scanner {
 
       if (ch === quote) {
         i++; // include the final quote for text
+        break;
       }
     }
 
