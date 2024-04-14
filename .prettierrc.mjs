@@ -1,24 +1,32 @@
+/**
+ * Add any rules you want, but Prettier is mainly here because of the Astro
+ * plugin. Code linting and style formatting support is handled by eslint and
+ * @stylistic/eslint-plugin.
+ *
+ * Styles set here ought to be generally consistent with styles set in
+ * eslint.config.mjs, but some things might make more sense specifically for
+ * Astro layouts.
+ */
+
 /** @type {import("prettier").Config} */
-const config = {
-  arrowParens: "always",
+export default {
+  arrowParens:    "always",
   bracketSpacing: true,
-  semi: true,
-  singleQuote: false,
-  trailingComma: "es5",
+  semi:           true,
+  singleQuote:    false,
+  trailingComma:  "es5",
 
   plugins: ["prettier-plugin-astro"],
 
   overrides: [
     {
-      // https://prettier.io/docs/en/configuration.html#editorconfig
-      editorconfig: true,
-      files: [".gitignore"],
+      files: [".gitignore", "**/*.{js,jsx,cjs,mjs,ts,tsx}"],
     },
     {
-      files: "*.astro",
-      options: { parser: "astro" },
+
+      // Let the astro plugin handle markdown layouts under src specifically.
+      files:   ["src/**/*.astro", "src/**/*.md"],
+      options: {parser: "astro"},
     },
   ],
 };
-
-export default config;

@@ -1,5 +1,5 @@
-.astro
-.husky
+# https://prettier.io/docs/en/ignore.html#ignoring-files-prettierignore
+.*/
 
 build/
 coverage/
@@ -8,3 +8,11 @@ scratch/
 
 .editorconfig
 package-lock.json
+
+# Using @stylistic/eslint-plugin instead
+**/*.js
+**/*.jsx
+**/*.cjs
+**/*.mjs
+**/*.ts
+**/*.tsx
