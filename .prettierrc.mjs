@@ -5,22 +5,20 @@ const config = {
   printWidth: 80,
   semi: true,
   singleQuote: false,
-  trailingComma: 'es5',
+  trailingComma: "es5",
 
-  plugins: [
-    'prettier-plugin-astro',
-  ],
+  plugins: ["prettier-plugin-astro"],
 
   overrides: [
     {
       editorconfig: true,
-      files: [ ".editorconfig", ".eslintignore" ],
-      options: { "parser": "json" }
+      files: [".editorconfig", ".eslintignore"],
+      options: { parser: "json" },
     },
     {
-      files: '*.astro',
-      options: { parser: 'astro' }
-    }
+      files: "*.astro",
+      options: { parser: "astro" },
+    },
   ],
 };
 
