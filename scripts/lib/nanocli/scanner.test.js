@@ -323,9 +323,10 @@ describe("Samples", () => {
       ],
     },
     {
-      input: 'foo -h --rm -it cool --baz=boo --bob:bee done',
+      input: 'crazy foo:bar -h --rm -it cool --baz=boo --bob:bee done',
       tokens: [
-        {value: "foo", type: TokenType.string},
+        {value: "crazy", type: TokenType.string},
+        {value: "foo:bar", type: TokenType.string},
         {value: "-h", type: TokenType.string},
         {value: "--rm", type: TokenType.string},
         {value: "-it", type: TokenType.string},
