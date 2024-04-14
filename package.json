@@ -13,10 +13,10 @@
     "test:watch": "npm test -- --watch"
   },
   "dependencies": {
-    "astro": "^4.6.1"
+    "astro": "4.6.1"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "jest": "^29.7.0"
+    "@types/jest": "29.5.12",
+    "jest": "29.7.0"
   }
 }
