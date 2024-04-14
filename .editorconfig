@@ -1,0 +1,42 @@
+root = true
+
+# Formatting behaviors shared with Prettier.
+# See: https://prettier.io/docs/en/configuration.html#editorconfig
+
+# Default
+[*]
+; Non-configurable Prettier behaviors
+charset = utf-8
+insert_final_newline = true
+
+; Configurable Prettier behaviors
+; Don't modify (default for shell scripts, etc, without extensions)
+end_of_line = lf
+max_line_length = 80
+indent_style = tab
+indent_size = 8
+
+# JavaScript
+[*.{js,mjs,cjs,jsx,ts,tsx}]
+indent_style = space
+indent_size = 2
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# YAML
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+# MarkDown
+[*.md]
+indent_style = space
+indent_size = 2
+
+# Astro
+[*.astro]
+indent_style = space
+indent_size = 2
