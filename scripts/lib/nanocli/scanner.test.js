@@ -292,10 +292,33 @@ describe("Samples", () => {
       ],
     },
     {
-      input: "foo bar baz",
+      input: "foo bar=a,b,c baz",
       tokens: [
         {value: "foo", type: TokenType.string},
         {value: "bar", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: ['a','b','c'], type: TokenType.array},
+        {value: "baz", type: TokenType.string},
+      ],
+    },
+    {
+      input: 'foo bar="a,b,c" baz',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "bar", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "a,b,c", type: TokenType.quotedString},
+        {value: "baz", type: TokenType.string},
+      ],
+    },
+    {
+      skip: true,
+      input: 'foo bar=a,"b",c baz',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "bar", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "a,b,c", type: TokenType.quotedString},
         {value: "baz", type: TokenType.string},
       ],
     },
@@ -305,9 +328,11 @@ describe("Samples", () => {
     if (t.skip) return;
     const scanner = new Scanner();
     const tokens = scanner.scan(t.input).tokens;
+    // console.log("*************************");
+    // console.log(tokens)
     expect(tokens.length).toBe(t.tokens.length);
     for (let i = 0; i < tokens.length; i++) {
-      expect(tokens[i].value).toBe(t.tokens[i].value);
+      expect(tokens[i].value).toEqual(t.tokens[i].value);
       expect(tokens[i].type).toBe(t.tokens[i].type);
     }
   });
