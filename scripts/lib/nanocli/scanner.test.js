@@ -1,5 +1,4 @@
 import * as assert from 'node:assert/strict';
-import util from "node:util";
 
 import {Scanner, Token, TokenType} from './scanner.js';
 
@@ -13,53 +12,6 @@ import {Scanner, Token, TokenType} from './scanner.js';
  *   will be used (which is also useful as a form of documentation), but failure
  *   output isn't as helpful since all that gets reported is a boolean failure
  */
-
-
-describe.skip("whitespace pattern", () => {
-  const whitespacePattern = /\s/g;
-
-  const tests = [
-    { input: " ", lastIndex: 0, expect: true },
-    { input: " foo", lastIndex: 1, expect: false },
-    // { input: "foo ", lastIndex: 0, expect: false },
-    // { input: "foo ", lastIndex: 2, expect: false },
-    // { input: "foo ", lastIndex: 3, expect: true },
-    // { input: "foo bar", lastIndex: 3, expect: true },
-    // { input: "foo bar", lastIndex: 4, expect: false },
-    // { input: "foo bar", lastIndex: 6, expect: false },
-    // { input: "foo bar", lastIndex: 7, expect: true },
-    // { input: "foo bar", lastIndex: 8, expect: true },
-  ];
-
-  test("identifiers", () => {
-    tests.forEach((t, index) => {
-      whitespacePattern.lastIndex = t.lastIndex;
-
-      console.log(`${index}: ${whitespacePattern.test(t.input)}`);
-
-      whitespacePattern.lastIndex = t.lastIndex;
-      assert.equal(whitespacePattern.test(t.input), t.expect, `${index}: ${util.inspect(t)}`);
-    });
-  });
-
-});
-
-describe("string pattern", () => {
-  const stringPattern = /\w+/;
-
-  const tests = [
-      "foo",
-      "foo = bar"
-  ]
-
-  test("identifiers", () => {
-    tests.forEach((input, index) => {
-      assert.ok(stringPattern.test(input));
-    });
-  });
-
-});
-
 
 describe('TokenType', () => {
 
