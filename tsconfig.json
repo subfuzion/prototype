@@ -2,6 +2,6 @@
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedParameters": false
   }
 }

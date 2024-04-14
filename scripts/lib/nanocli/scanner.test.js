@@ -1,6 +1,6 @@
-import * as assert from 'node:assert/strict';
+import * as assert from "node:assert/strict";
 
-import {Scanner, Token, TokenType} from './scanner.js';
+import { Scanner, Token, TokenType } from "./scanner.js";
 
 /**
  * Tests use a combination of expect and assert
@@ -13,9 +13,8 @@ import {Scanner, Token, TokenType} from './scanner.js';
  *   output isn't as helpful since all that gets reported is a boolean failure
  */
 
-describe('TokenType', () => {
-
-  test('equality', () => {
+describe("TokenType", () => {
+  test("equality", () => {
     let tt_punctuation = TokenType.punctuation;
 
     expect(tt_punctuation).toBe(TokenType.punctuation);
@@ -27,13 +26,11 @@ describe('TokenType', () => {
     assert.ok(tt_punctuation.name === TokenType.punctuation.name);
     assert.ok(tt_punctuation.type === TokenType.punctuation.type);
   });
-
 });
 
 describe("Token", () => {
-
   test("constructor", () => {
-    let token = new Token({text: ",", "type": TokenType.punctuation});
+    let token = new Token({ text: ",", type: TokenType.punctuation });
     expect(token.text).toBe(",");
     expect(token.type).toBe(TokenType.punctuation);
     expect(token.value).toBe(",");
@@ -44,16 +41,13 @@ describe("Token", () => {
   });
 
   test("value defaults to text", () => {
-    let token = new Token({text: "foo", "type": TokenType.string});
+    let token = new Token({ text: "foo", type: TokenType.string });
     expect(token.value).toBe("foo");
   });
-
 });
 
 describe("Scanner", () => {
-
   describe("Basic arguments", () => {
-
     test("single argument", () => {
       const input = "foo";
       const scanner = new Scanner();
@@ -150,11 +144,9 @@ describe("Scanner", () => {
       expect(token3.endCol).toBe(11);
       expect(token3.length).toBe(3);
     });
-
   });
 
   describe("Assignment", () => {
-
     test("basic assignment", () => {
       const input = "foo=bar";
       const scanner = new Scanner();
@@ -177,7 +169,6 @@ describe("Scanner", () => {
   });
 
   describe("List assignments", () => {
-
     test("basic assignment with a list", () => {
       const input = "foo=bar,baz,boo";
       const scanner = new Scanner();
@@ -194,11 +185,9 @@ describe("Scanner", () => {
       const list = tokens[2].value;
       expect(list[1]).toBe(2.1);
     });
-
   });
 
   describe("Assignment with quoted string", () => {
-
     test("basic assignment", () => {
       const input = 'foo="bar"';
       const scanner = new Scanner();
@@ -209,7 +198,7 @@ describe("Scanner", () => {
     });
 
     test("multiple assignments", () => {
-      const input = "foo=bar baz=\"boo\"";
+      const input = 'foo=bar baz="boo"';
       const scanner = new Scanner();
       const tokens = scanner.scan(input).tokens;
       expect(tokens.length).toBe(6);
@@ -217,7 +206,6 @@ describe("Scanner", () => {
       expect(tokens[5].type).toBe(TokenType.quotedString);
     });
   });
-
 });
 
 describe("Samples", () => {
@@ -225,90 +213,90 @@ describe("Samples", () => {
     {
       input: "foo bar baz",
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "bar", type: TokenType.string},
-        {value: "baz", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "bar", type: TokenType.string },
+        { value: "baz", type: TokenType.string },
       ],
     },
     {
       input: "foo=bar baz=boo",
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bar", type: TokenType.string},
-        {value: "baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bar", type: TokenType.string },
+        { value: "baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.string },
       ],
     },
     {
       input: 'foo="bar" baz=boo',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bar", type: TokenType.quotedString},
-        {value: "baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bar", type: TokenType.quotedString },
+        { value: "baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.string },
       ],
     },
     {
       input: 'foo="bar" baz="boo"',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bar", type: TokenType.quotedString},
-        {value: "baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.quotedString},
+        { value: "foo", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bar", type: TokenType.quotedString },
+        { value: "baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.quotedString },
       ],
     },
     {
       input: 'foo=bar baz="boo" bob="bee"',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bar", type: TokenType.string},
-        {value: "baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.quotedString},
-        {value: "bob", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bee", type: TokenType.quotedString},
+        { value: "foo", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bar", type: TokenType.string },
+        { value: "baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.quotedString },
+        { value: "bob", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bee", type: TokenType.quotedString },
       ],
     },
     {
       input: 'foo="bar" baz="boo" bob="bee"',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bar", type: TokenType.quotedString},
-        {value: "baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.quotedString},
-        {value: "bob", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "bee", type: TokenType.quotedString},
+        { value: "foo", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bar", type: TokenType.quotedString },
+        { value: "baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.quotedString },
+        { value: "bob", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "bee", type: TokenType.quotedString },
       ],
     },
     {
       input: "foo bar=a,b,c baz",
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "bar", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: ['a','b','c'], type: TokenType.array},
-        {value: "baz", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "bar", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: ["a", "b", "c"], type: TokenType.array },
+        { value: "baz", type: TokenType.string },
       ],
     },
     {
       input: 'foo bar="a,b,c" baz',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "bar", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "a,b,c", type: TokenType.quotedString},
-        {value: "baz", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "bar", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "a,b,c", type: TokenType.quotedString },
+        { value: "baz", type: TokenType.string },
       ],
     },
     {
@@ -316,11 +304,11 @@ describe("Samples", () => {
       skip: true,
       input: 'foo bar=a,"b",c baz',
       tokens: [
-        {value: "foo", type: TokenType.string},
-        {value: "bar", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "a,b,c", type: TokenType.quotedString},
-        {value: "baz", type: TokenType.string},
+        { value: "foo", type: TokenType.string },
+        { value: "bar", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "a,b,c", type: TokenType.quotedString },
+        { value: "baz", type: TokenType.string },
       ],
     },
     {
@@ -329,19 +317,19 @@ describe("Samples", () => {
       // - with foo:bar subcommand and options
       // - with cool subcommand and options
       // - with done argument
-      input: 'crazy foo:bar -h --rm -it cool --baz=boo --bob:bee done',
+      input: "crazy foo:bar -h --rm -it cool --baz=boo --bob:bee done",
       tokens: [
-        {value: "crazy", type: TokenType.string},
-        {value: "foo:bar", type: TokenType.string},
-        {value: "-h", type: TokenType.string},
-        {value: "--rm", type: TokenType.string},
-        {value: "-it", type: TokenType.string},
-        {value: "cool", type: TokenType.string},
-        {value: "--baz", type: TokenType.string},
-        {value: "=", type: TokenType.assignment},
-        {value: "boo", type: TokenType.string},
-        {value: "--bob:bee", type: TokenType.string},
-        {value: "done", type: TokenType.string},
+        { value: "crazy", type: TokenType.string },
+        { value: "foo:bar", type: TokenType.string },
+        { value: "-h", type: TokenType.string },
+        { value: "--rm", type: TokenType.string },
+        { value: "-it", type: TokenType.string },
+        { value: "cool", type: TokenType.string },
+        { value: "--baz", type: TokenType.string },
+        { value: "=", type: TokenType.assignment },
+        { value: "boo", type: TokenType.string },
+        { value: "--bob:bee", type: TokenType.string },
+        { value: "done", type: TokenType.string },
       ],
     },
   ];
@@ -359,5 +347,4 @@ describe("Samples", () => {
       expect(tokens[i].type).toBe(t.tokens[i].type);
     }
   });
-
 });

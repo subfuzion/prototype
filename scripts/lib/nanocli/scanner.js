@@ -83,13 +83,7 @@ export class Token {
    * @param { object } fields
    */
   constructor(fields) {
-    const keys = [
-      "text",
-      "type",
-      "value",
-      "startCol",
-      "endCol",
-    ];
+    const keys = ["text", "type", "value", "startCol", "endCol"];
 
     const map = keys.reduce((acc, key) => {
       acc[key] = fields[key];
@@ -116,14 +110,7 @@ export class Token {
    * @return { string }
    */
   toString() {
-    const keys = [
-      "type",
-      "value",
-      "text",
-      "startCol",
-      "endCol",
-      "length",
-    ];
+    const keys = ["type", "value", "text", "startCol", "endCol", "length"];
 
     const map = keys.reduce((acc, key) => {
       acc[key] = this[key];
@@ -145,24 +132,11 @@ export class Token {
  * HACK: scans a string, scan should return an iterator
  */
 export class Scanner {
-  static whitespacePattern = [
-    " ",
-    "\t",
-    "\n",
-    "\r"
-  ];
+  static whitespacePattern = [" ", "\t", "\n", "\r"];
   static whitespaceRegex = /\s+/;
 
-  static quotesPattern = [
-    "'",
-    '"',
-    "`"
-  ];
-  static quotesRegex = [
-    "'",
-    '"',
-    "`"
-  ];
+  static quotesPattern = ["'", '"', "`"];
+  static quotesRegex = ["'", '"', "`"];
 
   static assignmentPattern = "=";
   static assignmentRegex = "=";
@@ -203,14 +177,11 @@ export class Scanner {
       if (this.matchWhitespace()) {
         this.skipWhitespace();
         continue;
-      }
-      else if (this.matchAssignment()) {
+      } else if (this.matchAssignment()) {
         token = this.readAssignment();
-      }
-      else if (this.matchQuote()) {
+      } else if (this.matchQuote()) {
         token = this.readQuotedString();
-      }
-      else {
+      } else {
         token = this.readString();
       }
 
@@ -258,16 +229,15 @@ export class Scanner {
       Scanner.assignmentPattern,
     ];
 
-    matching:
-        for (; i < max; i++) {
-          let ch = this.peek(i);
+    matching: for (; i < max; i++) {
+      let ch = this.peek(i);
 
-          for (let dontMatch = 0; dontMatch < matchers.length; dontMatch++) {
-            if (matchers[dontMatch].includes(ch)) {
-              break matching;
-            }
-          }
+      for (let dontMatch = 0; dontMatch < matchers.length; dontMatch++) {
+        if (matchers[dontMatch].includes(ch)) {
+          break matching;
         }
+      }
+    }
 
     const text = this.#buffer.slice(startCol, i);
 
@@ -277,7 +247,7 @@ export class Scanner {
     if (text.includes(Scanner.separatorPattern)) {
       let splits = text.split(Scanner.separatorPattern);
 
-      splits = splits.map((s) => isNumber(s) ? Number(s) : s);
+      splits = splits.map((s) => (isNumber(s) ? Number(s) : s));
 
       return new Token({
         text: text,
@@ -309,15 +279,14 @@ export class Scanner {
     const prev = this.peek(startCol - 1);
     const next = this.peek(startCol + 1);
 
-    [
-      prev,
-      next
-    ].forEach((ch) => {
+    [prev, next].forEach((ch) => {
       if (Scanner.whitespacePattern.includes(ch)) {
         // startCol+1 since users usually expect 1-based positions in the shell
         throw new Error(
-            `Can't have any space before or after '=' in position ${startCol
-            + 1} of the input`);
+          `Can't have any space before or after '=' in position ${
+            startCol + 1
+          } of the input`
+        );
       }
     });
 
@@ -352,8 +321,7 @@ export class Scanner {
     return this.match(index, Scanner.separatorPattern);
   }
 
-  readToNextQuote(_index) {
-  }
+  readToNextQuote(_index) {}
 
   skip() {
     this.#col++;

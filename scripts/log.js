@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-import Cmd from './lib/nanocli.js';
+import Cmd from "./lib/nanocli.js";
 
-const description =
-    `Record and review important changes to the project. Changes are recorded in
+const description = `Record and review important changes to the project. Changes are recorded in
 [REPO]/docs/changelog.md
 
 - If you run the command with no argument, the changelog is printed to stdout.
@@ -12,7 +11,4 @@ const description =
   to the bottom of the changelog with a timestamp.
 `;
 
-Cmd()
-    .version("1.0.0")
-    .description(description)
-    .run();
+Cmd().version("1.0.0").description(description).run();
