@@ -2,11 +2,11 @@
 
 > [!NOTE]
 >
-> This changelog doesn't document new version releases. It's used for recording
-> important changes to the project structure and build tooling.
+> This changelog doesn't document new version releases. It's not a substitute
+> for git log either, but it's a convenient record of important changes to the
+> project structure, configuration, and tooling.
 
-Fri Apr 12 21:46:23 PDT 2024
-Ran `npm create astro@latest` and selected JavaScript
-
-Sat Apr 13 13:26:33 PDT 2024
-Add jest + types + config for test support
+1. Ran `npm create astro@latest` and selected JavaScript
+1. Add jest + types + config for test support
+1. Add unified edtitorconfig and prettier support
+1. Update .npmrc to ensure exact dep versions are saved by default
