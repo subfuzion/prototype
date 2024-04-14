@@ -227,28 +227,23 @@ export class Scanner {
     let i = startCol + 1;
     let max = this.#buffer.length;
 
+    for (; i < max; i++) {
+      let ch = this.peek(i);
 
-    matching:
-        for (; i < max; i++) {
-          let ch = this.peek(i);
-
-          if (ch === quote) {
-            i++; // include the final quote for text
-            break matching;
-          }
-        }
+      if (ch === quote) {
+        i++; // include the final quote for text
+      }
+    }
 
     const text = this.#buffer.slice(startCol, i);
 
-    let token = new Token({
+    return new Token({
       text: text,
       type: TokenType.quotedString,
       value: text.slice(1, -1), // strip quotes for value
       startCol: startCol,
       endCol: i,
     });
-
-    return token;
   }
 
   readString() {
