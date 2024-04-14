@@ -282,7 +282,7 @@ export class Scanner {
 
     const isNumber = (s) => !isNaN(Number(s));
 
-    // TODO: split won't work if pattern is an array (which one for split?), fix later.
+    // TODO: split won't work if pattern is an array (which one to use for split?), handle later.
     if (text.includes(Scanner.separatorPattern)) {
       let splits = text.split(Scanner.separatorPattern);
 
