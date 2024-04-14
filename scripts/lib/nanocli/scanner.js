@@ -223,23 +223,18 @@ export class Scanner {
 
   readQuotedString() {
     let startCol = this.#col;
-    let i = startCol;
+    let quote = this.peek(startCol);
+    let i = startCol + 1;
     let max = this.#buffer.length;
 
-    const matchers = [
-      // Scanner.whitespacePattern,
-      // Scanner.quotesPattern,
-      // Scanner.assignmentPattern,
-    ];
 
     matching:
         for (; i < max; i++) {
           let ch = this.peek(i);
 
-          for (let dontMatch = 0; dontMatch < matchers.length; dontMatch++) {
-            if (matchers[dontMatch].includes(ch)) {
-              break matching;
-            }
+          if (ch === quote) {
+            i++; // include the final quote for text
+            break matching;
           }
         }
 
@@ -248,7 +243,7 @@ export class Scanner {
     let token = new Token({
       text: text,
       type: TokenType.quotedString,
-      value: text.slice(1, -1), // strip quotes
+      value: text.slice(1, -1), // strip quotes for value
       startCol: startCol,
       endCol: i,
     });

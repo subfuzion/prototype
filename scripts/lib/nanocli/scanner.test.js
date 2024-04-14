@@ -219,3 +219,93 @@ describe("Scanner", () => {
   });
 
 });
+
+describe("Samples", () => {
+  const tests = [
+    {
+      skip: true,
+      input: "foo bar baz",
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "bar", type: TokenType.string},
+        {value: "baz", type: TokenType.string},
+      ],
+    },
+    {
+      skip: true,
+      input: "foo=bar baz=boo",
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bar", type: TokenType.string},
+        {value: "baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.string},
+      ],
+    },
+    {
+      skip: true,
+      input: 'foo="bar" baz=boo',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bar", type: TokenType.quotedString},
+        {value: "baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.string},
+      ],
+    },
+    {
+      skip: true,
+      input: 'foo="bar" baz="boo"',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bar", type: TokenType.quotedString},
+        {value: "baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.quotedString},
+      ],
+    },
+    {
+      input: 'foo=bar baz="boo" bob="bee"',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bar", type: TokenType.string},
+        {value: "baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.quotedString},
+        {value: "bob", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bee", type: TokenType.quotedString},
+      ],
+    },
+    {
+      input: 'foo="bar" baz="boo" bob="bee"',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bar", type: TokenType.quotedString},
+        {value: "baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.quotedString},
+        {value: "bob", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "bee", type: TokenType.quotedString},
+      ],
+    },
+  ];
+
+  tests.forEach((t) => {
+    if (t.skip) return;
+    const scanner = new Scanner();
+    const tokens = scanner.scan(t.input).tokens;
+    expect(tokens.length).toBe(t.tokens.length);
+    for (let i = 0; i < tokens.length; i++) {
+      expect(tokens[i].value).toBe(t.tokens[i].value);
+      expect(tokens[i].type).toBe(t.tokens[i].type);
+    }
+  });
+
+});
