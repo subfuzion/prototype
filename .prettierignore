@@ -1,0 +1,10 @@
+.astro
+.husky
+
+build/
+coverage/
+dist/
+scratch/
+
+.editorconfig
+package-lock.json
