@@ -11,6 +11,7 @@ insert_final_newline = true
 
 ; Configurable Prettier behaviors
 ; Don't modify (default for shell scripts, etc, without extensions)
+; https://prettier.io/docs/en/configuration.html#editorconfig
 end_of_line = lf
 max_line_length = 80
 indent_style = tab

@@ -10,9 +10,9 @@ const config = {
 
   overrides: [
     {
+      // https://prettier.io/docs/en/configuration.html#editorconfig
       editorconfig: true,
-      files: [".editorconfig", ".eslintignore"],
-      options: { parser: "json" },
+      files: [".gitignore"],
     },
     {
       files: "*.astro",
