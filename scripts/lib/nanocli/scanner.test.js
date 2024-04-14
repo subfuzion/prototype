@@ -322,6 +322,21 @@ describe("Samples", () => {
         {value: "baz", type: TokenType.string},
       ],
     },
+    {
+      input: 'foo -h --rm -it cool --baz=boo --bob bee',
+      tokens: [
+        {value: "foo", type: TokenType.string},
+        {value: "-h", type: TokenType.string},
+        {value: "--rm", type: TokenType.string},
+        {value: "-it", type: TokenType.string},
+        {value: "cool", type: TokenType.string},
+        {value: "--baz", type: TokenType.string},
+        {value: "=", type: TokenType.assignment},
+        {value: "boo", type: TokenType.string},
+        {value: "--bob", type: TokenType.string},
+        {value: "bee", type: TokenType.string},
+      ],
+    },
   ];
 
   tests.forEach((t) => {
@@ -330,6 +345,7 @@ describe("Samples", () => {
     const tokens = scanner.scan(t.input).tokens;
     // console.log("*************************");
     // console.log(tokens)
+
     expect(tokens.length).toBe(t.tokens.length);
     for (let i = 0; i < tokens.length; i++) {
       expect(tokens[i].value).toEqual(t.tokens[i].value);
