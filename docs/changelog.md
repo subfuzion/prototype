@@ -9,4 +9,8 @@
 1. Ran `npm create astro@latest` and selected JavaScript
 1. Add jest + types + config for test support
 1. Add unified edtitorconfig and prettier support
-1. Update .npmrc to ensure exact dep versions are saved by default
+1. Update `.npmrc` to ensure exact dep versions are pinned by default
+1. Added @stylistically/esling-plun and configured it extensively; prettier is
+   only used now for non-code files and for Astro layouts
+1. Added a git pre-commit hook ([husky](https://typicode.github.io/husky/)) to
+   lint, format, and run tests

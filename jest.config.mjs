@@ -1,7 +1,7 @@
 /** @type {import('jest').Config} */
 const config = {
-  verbose: false,
-  silent:  true,
+  verbose:                false,
+  silent:                 true,
   testPathIgnorePatterns: [
     "<rootDir>/\.astro/",
     "<rootDir>/\.git/",
