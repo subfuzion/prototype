@@ -1,25 +1,13 @@
-alias npm="\npm run"
-alias outdated="\npm --loglevel=notice outdated"
-alias run-script="\npm --loglevel=notice run-script"
-
-alias check="\npm run check"
-alias fix="\npm run fix"
-
-alias dev="\npm run dev"
-alias clean="\npm run clean"
-alias clean:all="\npm run clean:all"
-alias build="\npm --loglevel=notice run astro:build"
-alias preview="\npm --loglevel=notice run astro:preview"
-
-alias jest="\npm run test"
-alias jest:w="\npm run test:w"
-alias jest:watch="\npm run test:w"
-alias jest:v="\npm run test:v"
-alias jest:verbose="\npm run test:v"
-alias jest:vw="\npm run test:vw"
-alias jest:wv="\npm run test:vw"
-
-alias re="source npm.sh"
+# This script is meant to be sourced into a bash shell, not run as a script. You
+# can source it in bash by running the dot command or its synonym (source).
+#
+#   . npm.sh
+#   source npm.sh
+#
+#  You can restore your original shell environment by running the following:
+#
+#   restore
+#
 
 menu() {
 cat <<-EOF
@@ -46,6 +34,29 @@ Commands:
 
 EOF
 }
+
+alias npm="\npm run"
+alias outdated="\npm --loglevel=notice outdated"
+alias run-script="\npm --loglevel=notice run-script"
+
+alias check="\npm run check"
+alias fix="\npm run fix"
+
+alias dev="\npm run dev"
+alias clean="\npm run clean"
+alias clean:all="\npm run clean:all"
+alias build="\npm --loglevel=notice run astro:build"
+alias preview="\npm --loglevel=notice run astro:preview"
+
+alias jest="\npm run test"
+alias jest:w="\npm run test:w"
+alias jest:watch="\npm run test:w"
+alias jest:v="\npm run test:v"
+alias jest:verbose="\npm run test:v"
+alias jest:vw="\npm run test:vw"
+alias jest:wv="\npm run test:vw"
+
+alias re="source npm.sh"
 
 restore() {
   unalias npm >/dev/null
