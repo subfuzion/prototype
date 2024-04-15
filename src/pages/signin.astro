@@ -1,0 +1,120 @@
+---
+// import {app} from "../firebase/server";
+// import {getAuth} from "firebase-admin/auth";
+import Layout from "../layouts/Layout.astro";
+
+// const auth = getAuth(app);
+
+// BUG: doesn't work deployed (always null, although the page sees a cookie).
+if (Astro.cookies.has("session")) {
+  const session = Astro.cookies.get("session")?.value;
+  console.log("signin: 'session' cookie value:", session);
+
+  try {
+    if (session) {
+      // const decoded = await auth.verifySessionCookie(session);
+      // console.log("signin: decoded session:", decoded);
+      // if (decoded) {
+      //   console.log("signin: valid session, redirect to dashboard");
+      //   return Astro.redirect("/");
+      // } else {
+      //   console.log("signin: not a valid session, go sign in");
+      // }
+    } else {
+      console.log("signin: no session, go sign in");
+    }
+  } catch (err) {
+    // Might want to delete the cookie or let /api/auth/signout do it.
+    console.log("signin error: can't verify session cookie", err);
+  }
+}
+---
+
+<Layout title="Sign in">
+  <h1>Sign in</h1>
+  <p>Need to create an account? <a href="/register">Join</a></p>
+  <form action="/api/auth/signin" method="get">
+    <label for="email" for="email">Email</label>
+    <input value="user@example.com" type="email" name="email" id="email" />
+
+    <label for="password">Password</label>
+    <input value="password" type="password" name="password" id="password" />
+
+    <button type="submit">Sign in</button>
+  </form>
+</Layout>
+
+<script>
+  // import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+  // import {app} from "../firebase/client";
+  import { parseCookies } from "../lib/cookie";
+
+  // const auth = getAuth(app)
+
+  const form = document.querySelector("form") as HTMLFormElement;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+
+    // Shouldn't happen with form validation.
+    if (!email || !password) {
+      return;
+    }
+
+    try {
+      console.log("signin.astro:", email, password);
+      // const userCredential = await signInWithEmailAndPassword(
+      //     auth,
+      //     email,
+      //     password,
+      // );
+
+      //const idToken = await userCredential.user.getIdToken();
+      // const response = await fetch("/api/auth/signin", {
+      //   method: "GET",
+      //   headers: {
+      //     Authorization: `Bearer ${idToken}`,
+      //   },
+      // });
+      //
+      // console.log("signin: new session cookie!", parseCookies(document.cookie).session);
+      //
+      // if (response.redirected) {
+      //   window.location.assign(response.url);
+      // }
+
+      const idToken = "12345";
+      const response = await fetch("/api/auth/signin", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      console.log(
+        "signin: new session cookie!",
+        parseCookies(document.cookie).session
+      );
+
+      if (response.redirected) {
+        window.location.assign(response.url);
+      }
+    } catch (err) {
+      if (err.code) {
+        switch (err.code) {
+          case "auth/user-not-found":
+            console.error(
+              "signin: try signing in again (or create an account first)"
+            );
+            break;
+          default:
+            console.error("signin:", err.code, err);
+        }
+      } else {
+        console.error("signin:", err);
+      }
+    }
+  });
+</script>

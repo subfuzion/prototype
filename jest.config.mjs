@@ -12,7 +12,10 @@ const config = {
     "<rootDir>/build/",
     "<rootDir>/dist/",
     "<rootDir>/scratch/",
-    "<rootDir>/dist/",
+    "<rootDir>/test/",
+  ],
+  watchPathIgnorePatterns: [
+    "<rootDir>/test/",
   ],
 };
 

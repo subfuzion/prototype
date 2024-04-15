@@ -1,0 +1,25 @@
+---
+// import { app } from "../firebase/server";
+// import { getAuth } from "firebase-admin/auth";
+import Layout from "../layouts/Layout.astro";
+
+// const auth = getAuth(app);
+let user;
+
+const sessionCookie = Astro.cookies.get("session")?.value;
+if (sessionCookie) {
+  // const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+  // user = await auth.getUser(decodedCookie?.uid);
+}
+
+const msg = user
+  ? `Currently signed in as: ${user.displayName}`
+  : "You aren't signed in. Sign out anyway?";
+---
+
+<Layout title="Dashboard">
+  <h1>{msg}</h1>
+  <form action="/api/auth/signout">
+    <button type="submit">Sign out</button>
+  </form>
+</Layout>
