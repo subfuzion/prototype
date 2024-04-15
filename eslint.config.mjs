@@ -23,6 +23,7 @@ export default [
       "@stylistic/js": stylistic,
     },
     rules: {
+      "no-restricted-syntax":                           [2, "Literal[raw='null']"],
       "@stylistic/js/array-bracket-newline":            [2, "consistent"],
       "@stylistic/js/array-bracket-spacing":            [2, "never"],
       "@stylistic/js/array-element-newline":            [2, "consistent"],
