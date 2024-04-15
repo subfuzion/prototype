@@ -46,7 +46,7 @@ export default [
       "@stylistic/js/multiline-ternary":                [2, "always-multiline"],
       "@stylistic/js/new-parens":                       [2, "always"],
       "@stylistic/js/newline-per-chained-call":         [2],
-      "@stylistic/js/no-confusing-arrow":               [2, {onlyOneSimpleParam: true}],
+      "@stylistic/js/no-confusing-arrow":               [0],
       "@stylistic/js/no-extra-parens":                  [2, "all", {nestedBinaryExpressions: false}],
       "@stylistic/js/no-extra-semi":                    [2],
       "@stylistic/js/no-floating-decimal":              [2],
