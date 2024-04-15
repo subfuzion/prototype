@@ -1,4 +1,4 @@
-import { argv } from "node:process";
+import {argv} from "node:process";
 
 /**
  * Get the name of the current process.

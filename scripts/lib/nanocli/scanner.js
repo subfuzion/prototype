@@ -58,7 +58,8 @@ export class Token {
   startCol;
 
   /**
-   * The 0-based, non-inclusive ending column position of the token's text in the buffer
+   * The 0-based, non-inclusive ending column position of the token's text in
+   * the buffer
    * Example: the endCol for "foo" in "..foo.." is 5
    * @type {number}
    */
@@ -177,11 +178,14 @@ export class Scanner {
       if (this.matchWhitespace()) {
         this.skipWhitespace();
         continue;
-      } else if (this.matchAssignment()) {
+      }
+      else if (this.matchAssignment()) {
         token = this.readAssignment();
-      } else if (this.matchQuote()) {
+      }
+      else if (this.matchQuote()) {
         token = this.readQuotedString();
-      } else {
+      }
+      else {
         token = this.readString();
       }
 
@@ -210,11 +214,11 @@ export class Scanner {
     const text = this.#buffer.slice(startCol, i);
 
     return new Token({
-      text: text,
-      type: TokenType.quotedString,
-      value: text.slice(1, -1), // strip quotes for value
+      text:     text,
+      type:     TokenType.quotedString,
+      value:    text.slice(1, -1), // strip quotes for value
       startCol: startCol,
-      endCol: i,
+      endCol:   i,
     });
   }
 
@@ -241,28 +245,28 @@ export class Scanner {
 
     const text = this.#buffer.slice(startCol, i);
 
-    const isNumber = (s) => !isNaN(Number(s));
+    const isNumber = s => !isNaN(Number(s));
 
-    // TODO: split won't work if pattern is an array (which one to use for split?), handle later.
+    // TODO: won't work if pattern is an array, handle later.
     if (text.includes(Scanner.separatorPattern)) {
       let splits = text.split(Scanner.separatorPattern);
 
-      splits = splits.map((s) => (isNumber(s) ? Number(s) : s));
+      splits = splits.map(s => isNumber(s) ? Number(s) : s);
 
       return new Token({
-        text: text,
-        type: TokenType.array,
-        value: splits,
+        text:     text,
+        type:     TokenType.array,
+        value:    splits,
         startCol: startCol,
-        endCol: i,
+        endCol:   i,
       });
     }
 
     let token = new Token({
-      text: text,
-      type: TokenType.string,
+      text:     text,
+      type:     TokenType.string,
       startCol: startCol,
-      endCol: i,
+      endCol:   i,
     });
 
     if (isNumber(token.value)) {
@@ -285,16 +289,16 @@ export class Scanner {
         throw new Error(
           `Can't have any space before or after '=' in position ${
             startCol + 1
-          } of the input`
+          } of the input`,
         );
       }
     });
 
     return new Token({
-      text: this.read(),
-      type: TokenType.assignment,
+      text:     this.read(),
+      type:     TokenType.assignment,
       startCol: startCol,
-      endCol: this.#col,
+      endCol:   this.#col,
     });
   }
 

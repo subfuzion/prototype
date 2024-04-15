@@ -11,4 +11,6 @@ const description = `Record and review important changes to the project. Changes
   to the bottom of the changelog with a timestamp.
 `;
 
-Cmd().version("1.0.0").description(description).run();
+Cmd().version("1.0.0").
+  description(description).
+  run();
