@@ -5,7 +5,6 @@ export default [
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
   },
   {
-
     /**
      * node_modules and .git are the only default ignore patterns.
      * See: https://eslint.org/docs/latest/use/configure/ignore#ignoring-files
@@ -40,7 +39,7 @@ export default [
       "@stylistic/js/key-spacing":                      [2, {singleLine: {beforeColon: false, afterColon: true}, multiLine: {beforeColon: false, afterColon: true, align: "value"}}],
       "@stylistic/js/keyword-spacing":                  [2],
       "@stylistic/js/linebreak-style":                  [2, "unix"],
-      "@stylistic/js/lines-around-comment":             [2, {beforeLineComment: true, allowBlockStart: true, allowBlockEnd: true}],
+      "@stylistic/js/lines-around-comment":             [2, {beforeLineComment: true, beforeBlockComment: false, allowBlockStart: true, allowBlockEnd: true}],
       "@stylistic/js/max-len":                          [2, {code: 80, comments: 80, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true, ignoreRegExpLiterals: true}],
       "@stylistic/js/max-statements-per-line":          [2, {max: 2}],
       "@stylistic/js/multiline-ternary":                [2, "always-multiline"],
@@ -82,8 +81,6 @@ export default [
       "@stylistic/js/wrap-iife":                        [2, "inside"],
       "@stylistic/js/wrap-regex":                       [2],
       "@stylistic/js/yield-star-spacing":               [2, "before"],
-
-
     },
   },
 ];
