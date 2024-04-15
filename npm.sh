@@ -56,8 +56,6 @@ alias jest:verbose="\npm run test:v"
 alias jest:vw="\npm run test:vw"
 alias jest:wv="\npm run test:vw"
 
-alias re="source npm.sh"
-
 restore() {
   unalias npm >/dev/null
   unalias outdated >/dev/null
@@ -79,8 +77,6 @@ restore() {
   unalias jest:verbose >/dev/null
   unalias jest:vw >/dev/null
   unalias jest:wv >/dev/null
-
-  unalias re >/dev/null
 
   unset -f menu >/dev/null
   unset -f restore >/dev/null
