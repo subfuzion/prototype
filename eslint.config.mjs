@@ -10,7 +10,13 @@ export default [
      * See: https://eslint.org/docs/latest/use/configure/ignore#ignoring-files
      * The following ensures any dot-directory gets ignored.
      */
-    ignores: [".*/", "build/", "coverage/", "dist/", "scratch/"],
+    ignores: [
+      ".*/",
+      "build/",
+      "coverage/",
+      "dist/",
+      "scratch/",
+    ],
   },
   {
     plugins: {
