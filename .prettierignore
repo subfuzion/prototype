@@ -1,16 +1,15 @@
 # https://prettier.io/docs/en/ignore.html#ignoring-files-prettierignore
-# (ignore includes what's in .gitignore)
 
+# Ignore what's in .gitignore (default when .gitignore is in the same directory)
+
+# Ignore dot directories
 .*/
-build/
-coverage/
-dist/
-scratch/
 
+# Ignore specific files
 .editorconfig
 package-lock.json
 
-# Using @stylistic/eslint-plugin instead
+# Ignore code (using @stylistic/eslint-plugin instead)
 **/*.js
 **/*.jsx
 **/*.cjs
