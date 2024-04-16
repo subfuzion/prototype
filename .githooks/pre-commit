@@ -1,2 +1,2 @@
-#!/bin/sh
+#!/bin/sh -e
 . "${0%/*}/../scripts/githooks/pre-commit"
