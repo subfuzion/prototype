@@ -13,7 +13,8 @@ export default class Config {
   /**
    *  Get a config instance from the environment.
    *
-   * If a config instance is provided, it will be updated; otherwise a new config
+   * If a config instance is provided, it will be updated; otherwise a new
+   * config
    * instance will be returned.
    * @param {Config | undefined} config
    * @return {Config}
@@ -30,7 +31,8 @@ export default class Config {
   /**
    * Get a test config instance.
    *
-   * If a config instance is provided, it will be updated; otherwise a new config
+   * If a config instance is provided, it will be updated; otherwise a new
+   * config
    * instance will be returned.
    * @param {Config | undefined} config
    * @return {Config}
