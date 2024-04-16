@@ -1,6 +1,9 @@
 import ClientAdapter from "./interfaces/ClientAdapter.js";
 
 export default class Client extends ClientAdapter {
+  /** @type {Config} */
+  #config;
+
   /** @type {ClientAdapter} */
   #adapter;
 

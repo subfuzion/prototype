@@ -1,6 +1,6 @@
 import {beforeAll, describe, expect, test} from "@jest/globals";
 import * as assert from "node:assert/strict";
-import {Config} from "../lib/config.js";
+import {Config} from "../lib/Config.js";
 
 
 describe("Configuration", () => {
