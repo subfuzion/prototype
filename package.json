@@ -19,8 +19,8 @@
     "clean:all": "rimraf node_modules",
     "npm:outdated": "npm --loglevel=notice outdated",
     "npm:list": "npm --loglevel=notice run-script",
-    "githooks": "git config core.hooksPath=.githooks",
-    "postinstall": "npm run githooks"
+    "setup-githooks": "scripts/githooks/setup-githooks",
+    "postinstall": "npm run setup-githooks"
   },
   "dependencies": {
     "@astrojs/node": "8.2.5",

@@ -88,3 +88,5 @@ restore() {
   unset -f menu >/dev/null
   unset -f restore >/dev/null
 }
+
+export PATH="${PWD}/scripts:$PATH"
