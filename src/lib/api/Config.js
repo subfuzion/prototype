@@ -45,9 +45,11 @@ export default class Config {
     if (config) {
       // override everything in default test config with supplied config values
       Object.assign(testConfig, config);
+
       // merge everything back to the supplied config
       Object.assign(config, Config);
-    } else {
+    }
+    else {
       config = testConfig;
     }
 
