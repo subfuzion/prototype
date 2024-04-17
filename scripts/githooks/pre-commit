@@ -1,2 +1,2 @@
-npm run fix
-npm run test
+npm run fmt
+npm test
