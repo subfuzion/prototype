@@ -17,27 +17,34 @@ max_line_length = 80
 indent_style = tab
 indent_size = 8
 
-# JavaScript
+# Other ensuring the default rules are applied to all files, don't let Prettier
+# format code by matching the following pattern. Code styles are handled
+# separately using the @stylistic/eslint-plugin-{js,jsx} plugins for eslint.
 [*.{js,mjs,cjs,jsx,ts,tsx}]
+indent_style = space
+indent_size = 4
+
+# Astro
+[*.astro]
+indent_style = space
+indent_size = 4
+
+[*.css]
 indent_style = space
 indent_size = 2
 
-# JSON
+[*.html]
+indent_style = space
+indent_size = 4
+
 [*.json]
 indent_style = space
 indent_size = 2
 
-# YAML
-[*.yaml]
-indent_style = space
-indent_size = 2
-
-# MarkDown
 [*.md]
 indent_style = space
 indent_size = 2
 
-# Astro
-[*.astro]
+[*.yaml]
 indent_style = space
 indent_size = 2

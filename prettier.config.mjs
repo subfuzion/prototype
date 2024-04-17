@@ -10,23 +10,23 @@
 
 /** @type {import("prettier").Config} */
 export default {
-  arrowParens:    "always",
-  bracketSpacing: true,
-  semi:           true,
-  singleQuote:    false,
-  trailingComma:  "es5",
+    arrowParens:    "always",
+    bracketSpacing: true,
+    semi:           true,
+    singleQuote:    false,
+    trailingComma:  "es5",
 
-  plugins: ["prettier-plugin-astro"],
+    plugins: ["prettier-plugin-astro"],
 
-  overrides: [
-    {
-      files: [".gitignore", "**/*.{js,jsx,cjs,mjs,ts,tsx}"],
-    },
-    {
+    overrides: [
+        {
+            files: [".gitignore", "**/*.{js,jsx,cjs,mjs,ts,tsx}"],
+        },
+        {
 
-      // Let the astro plugin handle markdown layouts under src specifically.
-      files:   ["src/**/*.astro", "src/**/*.md"],
-      options: {parser: "astro"},
-    },
-  ],
+            // Astro plugin handles markdown layouts under src.
+            files:   ["src/**/*.astro", "src/**/*.md"],
+            options: {parser: "astro"},
+        },
+    ],
 };

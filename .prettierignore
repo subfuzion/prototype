@@ -9,7 +9,8 @@
 .editorconfig
 package-lock.json
 
-# Ignore code (using @stylistic/eslint-plugin instead)
+# Ignore code: use @stylistic/eslint-plugin-{js,jsx,ts,tsx} plugins for eslint
+# and eslint.config.mjs instead to apply code lint and style rules.
 **/*.js
 **/*.jsx
 **/*.cjs
