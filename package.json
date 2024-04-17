@@ -7,6 +7,8 @@
     "start": "node dist/server/entry.mjs",
     "check": "prettier . --check && eslint .",
     "fix": "prettier . --write && eslint . --fix",
+    "lint:fix": "eslint . --fix",
+    "lint:watch": "NODE_OPTIONS=\"$NODE_OPTIONS --no-warnings=ExperimentalWarning --experimental-vm-modules\" node --watch-path=./src --watch-path=scripts --watch-path=server --watch-path=./test node_modules/eslint/bin/eslint.js",
     "test": "scripts/jest",
     "test:verbose": "npm test -- --silent=0",
     "test:watch": "npm test -- --watch",
