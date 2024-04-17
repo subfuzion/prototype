@@ -33,7 +33,7 @@ Commands:
   outdated           list outdated dependencies in package.json
   run-script         like this, but list all scripts in package.json
 
-  npm		     shortcut for \`npm run\` (omit \`run\` like pnpm)
+  npm                shortcut for \`npm run\` (omit \`run\` like pnpm)
   restore            restore your shell environment (remove these commands)
   menu               show this help
 
