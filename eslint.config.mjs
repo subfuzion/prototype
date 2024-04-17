@@ -1,6 +1,8 @@
 import stylistic from "@stylistic/eslint-plugin";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 
 export default [
+  eslintPluginPrettier,
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
   },

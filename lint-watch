@@ -1,0 +1,7 @@
+NODE_OPTIONS="$NODE_OPTIONS --no-warnings=ExperimentalWarning --experimental-vm-modules" \
+    node --watch \
+    --watch-path=./src \
+    --watch-path=scripts \
+    --watch-path=server \
+    --watch-path=./test \
+    node_modules/eslint/bin/eslint.js

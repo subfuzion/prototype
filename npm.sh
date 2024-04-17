@@ -17,17 +17,17 @@ Commands:
   build              build production bundle
   preview            run preview server using production bundle
 
-  check              run format and lint checks
-  lint:fix            run lint and try to fix automatically
-  lint:w :watch      run lint and watch for changes
+  check              check for code and style issues
+  check:w :watch     watch for code and style issues
+  fmt                format and attempt to fix problematic code
 
   clean              remove build artifacts
   clean:all          remove build artifacts and delete node_modules
 
-  jest               run jest tests
-  jest:w :watch      run jest tests and watch for changes
-  jest:v :verbose    run jest tests with verbose output (includes console.log)
-  jest:vw :wv        run jest tests with verbose output and watch for changes
+  jest               run tests
+  jest:w :watch      run tests and watch for changes
+  jest:v :verbose    run tests with verbose output (includes console.log)
+  jest:vw :wv        run tests with verbose output and watch for changes
   jest:m             run manual (integration) tests under \`test/\`
 
   outdated           list outdated dependencies in package.json
@@ -40,15 +40,15 @@ Commands:
 EOF
 }
 
-alias npm="\npm run"
+#alias npm="\npm run"
+
 alias outdated="\npm --loglevel=notice outdated"
 alias run-script="\npm --loglevel=notice run-script"
 
-alias check="\npm run check"
-alias fix="\npm run fix"
-alias lint:fix="\npm run lint:fix --"
-alias lint:watch="\npm run lint:watch --"
-alias lint:w=lint:watch
+alias check="\npm run check --"
+alias check:watch="\npm run check:watch --"
+alias check:w=check:watch
+alias fmt="\npm run fmt --"
 
 alias dev="\npm run dev"
 alias clean="\npm run clean"
@@ -70,15 +70,15 @@ alias jest:m=test:manual
 menu
 
 restore() {
-  unalias npm >/dev/null
+#  unalias npm >/dev/null
+
   unalias outdated >/dev/null
   unalias run-script >/dev/null
 
   unalias check >/dev/null
-  unalias fix >/dev/null
-  unalias lint:fix >/dev/null
-  unalias lint:watch >/dev/null
-  unalias lint:w >/dev/null
+  unalias check:watch >/dev/null
+  unalias check:w >/dev/null
+  unalias fmt >/dev/null
 
   unalias dev >/dev/null
   unalias clean >/dev/null
