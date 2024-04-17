@@ -15,29 +15,29 @@ import {streamToString} from "./stream.js";
  * @returns {Promise<ParsedUrlQuery|{}>}
  */
 export async function formData(req) {
-  const text = await streamToString(req.body);
+    const text = await streamToString(req.body);
 
-  // Apparently always set to application/x-www-form-urlencoded
-  // console.log("Content-Type:", req.headers.get("Content-Type"));
+    // Apparently always set to application/x-www-form-urlencoded
+    // console.log("Content-Type:", req.headers.get("Content-Type"));
 
-  let data;
-  try {
-    data = JSON.parse(text);
+    let data;
+    try {
+        data = JSON.parse(text);
 
     // console.log("JSON parse worked");
-  }
-  catch {
-    try {
-      data = parse(text);
+    }
+    catch {
+        try {
+            data = parse(text);
 
-      // console.log("urlencoded parse worked");
+            // console.log("urlencoded parse worked");
+        }
+        catch (err) {
+            console.error(`Error parsing form data: ${err.message}`, err);
+            return {};
+        }
     }
-    catch (err) {
-      console.error(`Error parsing form data: ${err.message}`, err);
-      return {};
-    }
-  }
-  return data;
+    return data;
 }
 
 /**
@@ -47,8 +47,8 @@ export async function formData(req) {
  * @return {*|string}
  */
 export function get(form, key) {
-  const val = form[key];
-  return val
-    ? Array.isArray(val) ? val[0].toString() : val.toString()
-    : val;
+    const val = form[key];
+    return val
+        ? Array.isArray(val) ? val[0].toString() : val.toString()
+        : val;
 }
